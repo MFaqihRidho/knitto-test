@@ -5,6 +5,10 @@ export interface Todo {
     title: string;
     completed: boolean;
 }
+export interface NewTodo {
+    title: string;
+    completed: boolean;
+}
 interface Parameters {
     page?: number;
     limit?: number;
@@ -20,13 +24,12 @@ const todosApi = createApi({
             query: ({ page = 1, limit = 10 }) =>
                 `?_limit=${limit}&_page=${page}`, // Empty string for root endpoint
         }),
-        createTodo: builder.mutation<Todo, Todo>({
+        createTodo: builder.mutation<Todo, NewTodo>({
             query: (newTodo) => ({
                 url: "", // Replace with your create todo endpoint
                 method: "POST",
                 body: newTodo,
             }),
-            invalidatesTags: ["Todos"], // Invalidate "Todos" tag on create
         }),
     }),
 });
